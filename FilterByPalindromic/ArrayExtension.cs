@@ -20,7 +20,67 @@ namespace FilterByPalindromicTask
         /// </example>
         public static int[] FilterByPalindromic(int[]? source)
         {
-            throw new NotImplementedException("You need to implement this function.");
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source), "Source is null");
+            }
+
+            if (source.Length == 0)
+            {
+                throw new ArgumentException("Source is empty", nameof(source));
+            }
+
+            int[] array = new int[source.Length];
+            int k = 0;
+            for (int i = 0; i < source.Length; i++)
+            {
+                array[i] = -1;
+            }
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                if (source[i] < 0)
+                {
+                    continue;
+                }
+
+                if (source[i] == 0)
+                {
+                    array[k++] = i;
+                    continue;
+                }
+
+                int[] custom = new int[10];
+                int j = 9;
+                int a = source[i];
+                while (a > 0)
+                {
+                    custom[j] = a % 10;
+                    j--;
+                    a /= 10;
+                }
+
+                j++;
+                int b = 9;
+                while (custom[j] == custom[b] && j < b)
+                {
+                    j++;
+                    b--;
+                }
+
+                if (j >= b)
+                {
+                    array[k++] = i;
+                }
+            }
+
+            int[] final = new int[k];
+            for (int i = 0; i < k; i++)
+            {
+                final[i] = source[array[i]];
+            }
+
+            return final;
         }
     }
 }
